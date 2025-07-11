@@ -3,7 +3,7 @@
 Plugin Name: JPKCom Gutenberg Image Block Alt-Attribute
 Plugin URI: https://github.com/JPKCom/jpkcom-gutenberg-img-alt
 Description: SEO-friendly, dynamic updates for image block alt-attribute texts.
-Version: 1.0.0
+Version: 1.0.1
 Author: Jean Pierre Kolb <jpk@jpkc.com>
 Author URI: https://www.jpkc.com
 Contributors: JPKCom
@@ -11,7 +11,7 @@ Tags: Gutenberg, SEO, Image, Block
 Requires at least: 6.8
 Tested up to: 6.8
 Requires PHP: 8.3
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 GitHub Plugin URI: JPKCom/jpkcom-gutenberg-img-alt
@@ -34,7 +34,7 @@ add_filter( 'render_block', function( $block_content, $block ): mixed {
             $block_content = preg_replace(
 
                 pattern: '/(<img[^>]+alt=")[^"]*("[^>]*>)/',
-                replacement: '$1' . esc_attr( $alt ) . '$2',
+                replacement: '${1}' . esc_attr( $alt ) . '${2}',
                 subject: $block_content
 
             );
