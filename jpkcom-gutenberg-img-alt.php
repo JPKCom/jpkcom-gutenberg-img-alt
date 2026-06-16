@@ -23,6 +23,8 @@ if ( ! defined( constant_name: 'WPINC' ) ) {
 
 /**
  * Plugin Constants
+ *
+ * @since 1.0.2
  */
 if ( ! defined( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION' ) ) {
     define( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION', '1.0.2' );
@@ -33,6 +35,10 @@ if ( ! defined( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION' ) ) {
  * Initialize Plugin Updater
  *
  * Loads and initializes the GitHub-based plugin updater with SHA256 checksum verification.
+ *
+ * @since 1.0.2
+ *
+ * @return void
  */
 add_action( 'init', static function (): void {
     $updater_file = plugin_dir_path( __FILE__ ) . 'includes/class-plugin-updater.php';
@@ -50,6 +56,15 @@ add_action( 'init', static function (): void {
     }
 }, 5 );
 
+/**
+ * Inject the attachment's alt text into rendered core/image blocks.
+ *
+ * @since 1.0.0
+ *
+ * @param string $block_content The rendered block HTML.
+ * @param array  $block         The parsed block, including its attributes.
+ * @return mixed The block HTML with an updated alt attribute when available.
+ */
 add_filter( 'render_block', function( $block_content, $block ): mixed {
 
     if ( $block['blockName'] === 'core/image' && isset( $block['attrs']['id'] ) ) {
