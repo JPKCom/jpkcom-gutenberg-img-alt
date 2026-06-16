@@ -3,24 +3,52 @@
 Plugin Name: JPKCom Gutenberg Image Block Alt-Attribute
 Plugin URI: https://github.com/JPKCom/jpkcom-gutenberg-img-alt
 Description: SEO-friendly, dynamic updates for image block alt-attribute texts.
-Version: 1.0.1
+Version: 1.0.2
 Author: Jean Pierre Kolb <jpk@jpkc.com>
 Author URI: https://www.jpkc.com
 Contributors: JPKCom
 Tags: Gutenberg, SEO, Image, Block
-Requires at least: 6.8
-Tested up to: 6.8
+Requires at least: 6.9
+Tested up to: 7.0
 Requires PHP: 8.3
-Stable tag: 1.0.1
-License: GPL-2.0+
-License URI: http://www.gnu.org/licenses/gpl-2.0.txt
-GitHub Plugin URI: JPKCom/jpkcom-gutenberg-img-alt
-Primary Branch: main
+Stable tag: 1.0.2
+License: GPL-2.0-or-later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
 if ( ! defined( constant_name: 'WPINC' ) ) {
         die;
 }
+
+
+/**
+ * Plugin Constants
+ */
+if ( ! defined( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION' ) ) {
+    define( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION', '1.0.2' );
+}
+
+
+/**
+ * Initialize Plugin Updater
+ *
+ * Loads and initializes the GitHub-based plugin updater with SHA256 checksum verification.
+ */
+add_action( 'init', static function (): void {
+    $updater_file = plugin_dir_path( __FILE__ ) . 'includes/class-plugin-updater.php';
+
+    if ( file_exists( $updater_file ) ) {
+        require_once $updater_file;
+
+        if ( class_exists( 'JPKComGutenbergImgAltGitUpdate\\JPKComGitPluginUpdater' ) ) {
+            new \JPKComGutenbergImgAltGitUpdate\JPKComGitPluginUpdater(
+                plugin_file: __FILE__,
+                current_version: JPKCOM_GUTENBERG_IMG_ALT_VERSION,
+                manifest_url: 'https://jpkcom.github.io/jpkcom-gutenberg-img-alt/plugin_jpkcom-gutenberg-img-alt.json'
+            );
+        }
+    }
+}, 5 );
 
 add_filter( 'render_block', function( $block_content, $block ): mixed {
 
