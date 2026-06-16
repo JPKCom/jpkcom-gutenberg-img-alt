@@ -38,6 +38,7 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 * Raised the minimum WordPress version to 6.9 and "Tested up to" to WordPress 7.0
 * Switched license metadata to the SPDX identifier `GPL-2.0-or-later` with the HTTPS license URI
 * Added PHPDoc-generated API documentation, built and deployed to gh-pages on release
+* Hardening: enabled `declare(strict_types=1)` and added precise closure parameter/return types
 
 ### 1.0.1
 * Replacement bugfix

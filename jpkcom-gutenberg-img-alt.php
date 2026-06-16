@@ -16,6 +16,8 @@ License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
 
+declare(strict_types=1);
+
 if ( ! defined( constant_name: 'WPINC' ) ) {
         die;
 }
@@ -63,24 +65,22 @@ add_action( 'init', static function (): void {
  *
  * @param string $block_content The rendered block HTML.
  * @param array  $block         The parsed block, including its attributes.
- * @return mixed The block HTML with an updated alt attribute when available.
+ * @return string The block HTML with an updated alt attribute when available.
  */
-add_filter( 'render_block', function( $block_content, $block ): mixed {
+add_filter( 'render_block', function( string $block_content, array $block ): string {
 
-    if ( $block['blockName'] === 'core/image' && isset( $block['attrs']['id'] ) ) {
+    if ( ( $block['blockName'] ?? null ) === 'core/image' && isset( $block['attrs']['id'] ) ) {
 
-        $image_id = $block['attrs']['id'];
+        $image_id = (int) $block['attrs']['id'];
         $alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 
         if ( ! empty( $alt ) ) {
 
             $block_content = preg_replace(
-
                 pattern: '/(<img[^>]+alt=")[^"]*("[^>]*>)/',
                 replacement: '${1}' . esc_attr( $alt ) . '${2}',
                 subject: $block_content
-
-            );
+            ) ?? $block_content;
 
         }
 
