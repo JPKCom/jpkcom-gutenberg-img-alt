@@ -31,7 +31,7 @@ The callback is typed `( string $block_content, array $block ): string`. The att
 
 | Constant | Value | Purpose |
 |----------|-------|---------|
-| `JPKCOM_GUTENBERG_IMG_ALT_VERSION` | `'1.0.4'` | Plugin version (sync with header/README/phpdoc.xml) |
+| `JPKCOM_GUTENBERG_IMG_ALT_VERSION` | `'1.0.5'` | Plugin version (sync with header/README/phpdoc.xml) |
 
 ---
 
