@@ -59,6 +59,32 @@ add_action( 'init', static function (): void {
 }, 5 );
 
 /**
+ * Replace an existing img alt attribute without interpreting replacement text.
+ *
+ * preg_replace() replacement strings treat $1, \1, and similar sequences as
+ * backreferences. Attachment alt text is user-editable content, so use a
+ * callback to keep the escaped alt text literal.
+ *
+ * @since 1.0.8
+ *
+ * @param string $block_content The rendered image block HTML.
+ * @param string $alt           Attachment alt text.
+ * @return string The block HTML with an updated alt attribute when available.
+ */
+function jpkcom_gutenberg_img_alt_replace_alt_attribute( string $block_content, string $alt ): string {
+    if ( '' === trim( $alt ) ) {
+        return $block_content;
+    }
+
+    return preg_replace_callback(
+        pattern: '/(<img[^>]+alt=")[^"]*("[^>]*>)/',
+        callback: static fn( array $matches ): string => $matches[1] . esc_attr( $alt ) . $matches[2],
+        subject: $block_content
+    ) ?? $block_content;
+}
+
+
+/**
  * Inject the attachment's alt text into rendered core/image blocks.
  *
  * @since 1.0.0
@@ -75,12 +101,10 @@ add_filter( 'render_block', function( string $block_content, array $block ): str
         $alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 
         if ( ! empty( $alt ) ) {
-
-            $block_content = preg_replace(
-                pattern: '/(<img[^>]+alt=")[^"]*("[^>]*>)/',
-                replacement: '${1}' . esc_attr( $alt ) . '${2}',
-                subject: $block_content
-            ) ?? $block_content;
+            $block_content = jpkcom_gutenberg_img_alt_replace_alt_attribute(
+                block_content: $block_content,
+                alt: (string) $alt
+            );
 
         }
 
