@@ -2,7 +2,15 @@ name: CI
 
 # Läuft auf jedem Pull Request. Vorher prüfte nichts die PRs dieses Repos –
 # damit gab es auch keinen Status-Check, auf den ein Auto-Merge warten könnte.
+#
+# Zusätzlich auf jedem Push nach main: der Required-Status-Check greift nur für
+# Pull Requests, und ein Direct Push mit Bypass-Rechten umging damit die
+# komplette Prüfung. Genau so kam 1.0.8 ungeprüft auf main. Tags sind bewusst
+# nicht erfasst – die baut release.yml.
 on:
+  push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
