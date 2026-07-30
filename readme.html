@@ -6,7 +6,7 @@ Alt-Attribute<br />
 https://github.com/JPKCom/jpkcom-gutenberg-img-alt<br />
 <strong>Description:</strong> SEO-friendly, dynamic updates for image
 block alt-attribute texts.<br />
-<strong>Version:</strong> 1.0.7<br />
+<strong>Version:</strong> 1.0.8<br />
 <strong>Author:</strong> Jean Pierre Kolb <a href="mailto:jpk@jpkc.com"
 class="email">jpk@jpkc.com</a><br />
 <strong>Author URI:</strong> https://www.jpkc.com<br />
@@ -15,7 +15,7 @@ class="email">jpk@jpkc.com</a><br />
 <strong>Requires at least:</strong> 6.9<br />
 <strong>Tested up to:</strong> 7.1<br />
 <strong>Requires PHP:</strong> 8.3<br />
-<strong>Stable tag:</strong> 1.0.7<br />
+<strong>Stable tag:</strong> 1.0.8<br />
 <strong>License:</strong> GPL-2.0-or-later<br />
 <strong>License URI:</strong>
 https://www.gnu.org/licenses/gpl-2.0.html</p>
@@ -37,7 +37,31 @@ file. Click ‘Install Now’.</li>
 <li>Click ‘Activate’ to use the plugin right away.</li>
 </ol>
 <h2 id="changelog">Changelog</h2>
-<h3 id="section">1.0.7</h3>
+<h3 id="section">1.0.8</h3>
+<ul>
+<li>Fixed: alt text containing <code>$1</code>, <code>${1}</code>,
+<code>$2</code> or <code>\1</code> corrupted the rendered image tag.
+Those sequences are backreferences inside a <code>preg_replace()</code>
+replacement string, so ordinary editorial text — a price, a version
+number — was substituted with part of the matched
+<code>&lt;img&gt;</code> tag instead of being inserted literally. In the
+<code>$2</code> case the tag was closed early and the remainder leaked
+onto the page as visible text. The replacement now runs through
+<code>preg_replace_callback()</code>, which never interpolates. Thanks
+to <a href="https://github.com/yoldaolmak"><span class="citation"
+data-cites="yoldaolmak">@yoldaolmak</span></a> (Kemal Kaya) for finding
+and fixing this</li>
+<li>Changed: an alt text consisting only of whitespace no longer
+overwrites the alt attribute already present in the markup</li>
+<li>Added: <code>tests/test-alt-replacement.php</code> regression tests
+for the replacement helper (group references kept literal, attribute
+escaping, whitespace-only input, images without an alt attribute,
+multiple images per block)</li>
+<li>Hardening: the new replacement helper is guarded with
+<code>function_exists()</code> so a duplicate plugin copy cannot trigger
+a redeclare fatal</li>
+</ul>
+<h3 id="section-1">1.0.7</h3>
 <ul>
 <li>Changed: <code>Tested up to</code> raised to WordPress 7.1</li>
 <li>Changed: the bundled updater’s runtime floor now matches the
@@ -49,7 +73,7 @@ and <code>tested</code> now say 6.9 and 7.1. They only apply when the
 README metadata cannot be read, but a stale fallback would have
 published a minimum the plugin no longer supports</li>
 </ul>
-<h3 id="section-1">1.0.6</h3>
+<h3 id="section-2">1.0.6</h3>
 <ul>
 <li>Added: plugin banners (<code>assets/banner-1544x500.avif</code>,
 <code>assets/banner-772x250.avif</code>) — a plain <code>#3c4955</code>
@@ -57,7 +81,7 @@ surface with no lettering. The update manifest already advertised these
 two URLs, but nothing was published under them, so the plugin card in
 wp-admin had a broken banner</li>
 </ul>
-<h3 id="section-2">1.0.5</h3>
+<h3 id="section-3">1.0.5</h3>
 <ul>
 <li>CI: the release step no longer copies the staging directory into
 itself, so the ZIP has no empty
@@ -71,7 +95,7 @@ to full commit SHAs</li>
 <li>CI: security and regression tests now run on every pull request,
 where a plugin has them</li>
 </ul>
-<h3 id="section-3">1.0.4</h3>
+<h3 id="section-4">1.0.4</h3>
 <ul>
 <li>Security: update packages are now verified <em>before</em>
 installation — the verified file is handed to WordPress instead of being
@@ -96,11 +120,11 @@ instead of being retried on every admin request</li>
 <li>Added: CI workflow on every pull request (PHP lint, named-argument
 check, YAML validation, action-pinning guard)</li>
 </ul>
-<h3 id="section-4">1.0.3</h3>
+<h3 id="section-5">1.0.3</h3>
 <ul>
 <li>Docs: linked the published PHPDoc API documentation</li>
 </ul>
-<h3 id="section-5">1.0.2</h3>
+<h3 id="section-6">1.0.2</h3>
 <ul>
 <li>Added secure self-hosted plugin updates via GitHub with SHA256
 checksum verification</li>
@@ -115,11 +139,11 @@ gh-pages on release</li>
 <li>Hardening: enabled <code>declare(strict_types=1)</code> and added
 precise closure parameter/return types</li>
 </ul>
-<h3 id="section-6">1.0.1</h3>
+<h3 id="section-7">1.0.1</h3>
 <ul>
 <li>Replacement bugfix</li>
 </ul>
-<h3 id="section-7">1.0.0</h3>
+<h3 id="section-8">1.0.0</h3>
 <ul>
 <li>Initial Release</li>
 </ul>

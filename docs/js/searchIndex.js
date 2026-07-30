@@ -76,6 +76,11 @@ Search.appendIndex(
             "summary": "",
             "url": "namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_VERSION"
         },                {
+            "fqsen": "\\jpkcom_gutenberg_img_alt_replace_alt_attribute\u0028\u0029",
+            "name": "jpkcom_gutenberg_img_alt_replace_alt_attribute",
+            "summary": "",
+            "url": "namespaces/default.html#function_jpkcom_gutenberg_img_alt_replace_alt_attribute"
+        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
