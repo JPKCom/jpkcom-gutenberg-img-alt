@@ -3,7 +3,7 @@
 Plugin Name: JPKCom Gutenberg Image Block Alt-Attribute
 Plugin URI: https://github.com/JPKCom/jpkcom-gutenberg-img-alt
 Description: SEO-friendly, dynamic updates for image block alt-attribute texts.
-Version: 1.0.7
+Version: 1.0.8
 Author: Jean Pierre Kolb <jpk@jpkc.com>
 Author URI: https://www.jpkc.com
 Contributors: JPKCom
@@ -11,7 +11,7 @@ Tags: Gutenberg, SEO, Image, Block
 Requires at least: 6.9
 Tested up to: 7.1
 Requires PHP: 8.3
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -29,7 +29,7 @@ if ( ! defined( constant_name: 'WPINC' ) ) {
  * @since 1.0.2
  */
 if ( ! defined( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION' ) ) {
-    define( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION', '1.0.7' );
+    define( 'JPKCOM_GUTENBERG_IMG_ALT_VERSION', '1.0.8' );
 }
 
 
@@ -71,16 +71,18 @@ add_action( 'init', static function (): void {
  * @param string $alt           Attachment alt text.
  * @return string The block HTML with an updated alt attribute when available.
  */
-function jpkcom_gutenberg_img_alt_replace_alt_attribute( string $block_content, string $alt ): string {
-    if ( '' === trim( $alt ) ) {
-        return $block_content;
-    }
+if ( ! function_exists( 'jpkcom_gutenberg_img_alt_replace_alt_attribute' ) ) {
+    function jpkcom_gutenberg_img_alt_replace_alt_attribute( string $block_content, string $alt ): string {
+        if ( '' === trim( $alt ) ) {
+            return $block_content;
+        }
 
-    return preg_replace_callback(
-        pattern: '/(<img[^>]+alt=")[^"]*("[^>]*>)/',
-        callback: static fn( array $matches ): string => $matches[1] . esc_attr( $alt ) . $matches[2],
-        subject: $block_content
-    ) ?? $block_content;
+        return preg_replace_callback(
+            pattern: '/(<img[^>]+alt=")[^"]*("[^>]*>)/',
+            callback: static fn( array $matches ): string => $matches[1] . esc_attr( $alt ) . $matches[2],
+            subject: $block_content
+        ) ?? $block_content;
+    }
 }
 
 

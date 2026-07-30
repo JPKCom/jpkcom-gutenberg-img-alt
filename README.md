@@ -3,7 +3,7 @@
 **Plugin Name:** JPKCom Gutenberg Image Block Alt-Attribute  
 **Plugin URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt  
 **Description:** SEO-friendly, dynamic updates for image block alt-attribute texts.  
-**Version:** 1.0.7  
+**Version:** 1.0.8  
 **Author:** Jean Pierre Kolb <jpk@jpkc.com>  
 **Author URI:** https://www.jpkc.com  
 **Contributors:** JPKCom  
@@ -11,7 +11,7 @@
 **Requires at least:** 6.9  
 **Tested up to:** 7.1  
 **Requires PHP:** 8.3  
-**Stable tag:** 1.0.7  
+**Stable tag:** 1.0.8  
 **License:** GPL-2.0-or-later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,12 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 
 
 ## Changelog
+
+### 1.0.8
+* Fixed: alt text containing `$1`, `${1}`, `$2` or `\1` corrupted the rendered image tag. Those sequences are backreferences inside a `preg_replace()` replacement string, so ordinary editorial text — a price, a version number — was substituted with part of the matched `<img>` tag instead of being inserted literally. In the `$2` case the tag was closed early and the remainder leaked onto the page as visible text. The replacement now runs through `preg_replace_callback()`, which never interpolates. Thanks to [@yoldaolmak](https://github.com/yoldaolmak) (Kemal Kaya) for finding and fixing this
+* Changed: an alt text consisting only of whitespace no longer overwrites the alt attribute already present in the markup
+* Added: `tests/test-alt-replacement.php` regression tests for the replacement helper (group references kept literal, attribute escaping, whitespace-only input, images without an alt attribute, multiple images per block)
+* Hardening: the new replacement helper is guarded with `function_exists()` so a duplicate plugin copy cannot trigger a redeclare fatal
 
 ### 1.0.7
 * Changed: `Tested up to` raised to WordPress 7.1
