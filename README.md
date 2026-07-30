@@ -3,7 +3,7 @@
 **Plugin Name:** JPKCom Gutenberg Image Block Alt-Attribute  
 **Plugin URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt  
 **Description:** SEO-friendly, dynamic updates for image block alt-attribute texts.  
-**Version:** 1.0.8  
+**Version:** 1.0.9  
 **Author:** Jean Pierre Kolb <jpk@jpkc.com>  
 **Author URI:** https://www.jpkc.com  
 **Contributors:** JPKCom  
@@ -11,7 +11,7 @@
 **Requires at least:** 6.9  
 **Tested up to:** 7.1  
 **Requires PHP:** 8.3  
-**Stable tag:** 1.0.8  
+**Stable tag:** 1.0.9  
 **License:** GPL-2.0-or-later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,10 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 
 
 ## Changelog
+
+### 1.0.9
+* CI: the release manifest declared `"network": true` for this plugin. The generator fell back to `true` when the plugin header carries no `Network:` line — which is the case here and is WordPress' own default for *not* network-only, so the fallback was inverted. The manifest now says `false`. This is metadata hygiene rather than a functional fix: WordPress derives network-only status from the plugin header via `is_network_only_plugin()`, not from the update manifest, and the bundled updater already defaulted to `false` on its own. A release is needed for it to take effect because the manifest is only regenerated on a tag push
+* CI: the lint and guard workflow now also runs on pushes to `main`. The required status check only ever applied to pull requests, so a direct push with bypass rights skipped every check
 
 ### 1.0.8
 * Fixed: alt text containing `$1`, `${1}`, `$2` or `\1` corrupted the rendered image tag. Those sequences are backreferences inside a `preg_replace()` replacement string, so ordinary editorial text — a price, a version number — was substituted with part of the matched `<img>` tag instead of being inserted literally. In the `$2` case the tag was closed early and the remainder leaked onto the page as visible text. The replacement now runs through `preg_replace_callback()`, which never interpolates. Thanks to [@yoldaolmak](https://github.com/yoldaolmak) (Kemal Kaya) for finding and fixing this
