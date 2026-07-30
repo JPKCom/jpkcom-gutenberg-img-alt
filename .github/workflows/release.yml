@@ -182,7 +182,11 @@ jobs:
               "license_uri": clean_meta_value(meta.get("LicenseURI", "https://www.gnu.org/licenses/gpl-2.0.html")),
               "text_domain": clean_meta_value(meta.get("TextDomain", "")),
               "domain_path": clean_meta_value(meta.get("DomainPath", "/languages")),
-              "network": str(meta.get("Network", "true")).lower() == "true",
+              # Fallback false, nicht true: fehlt der Network-Header, ist das
+              # Plugin nicht network-only - das ist auch WordPress' eigener
+              # Default. Der bisherige true-Fallback behauptete network-only
+              # fuer jedes Plugin ohne diesen Header, also auch fuer dieses.
+              "network": str(meta.get("Network", "false")).lower() == "true",
               "requires_plugins": [clean_meta_value(p.strip()) for p in meta.get("RequiresPlugins", "").split(",") if p.strip()],
               "homepage": clean_meta_value(meta.get("PluginURI", f"https://github.com/JPKCom/{os.environ.get('PLUGIN_SLUG')}")),
               "last_updated": os.environ.get("DATE"),
