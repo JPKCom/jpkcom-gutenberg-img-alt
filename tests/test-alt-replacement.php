@@ -5,6 +5,14 @@ if ( ! defined( constant_name: 'WPINC' ) ) {
     define( constant_name: 'WPINC', value: true );
 }
 
+// ABSPATH as well, since 1.1.0: the main file now loads includes/abilities.php,
+// which exits when ABSPATH is undefined. Without this the require below ended
+// the process before a single case ran - exit 0, no output, and a CI job that
+// reported success while testing nothing.
+if ( ! defined( constant_name: 'ABSPATH' ) ) {
+    define( constant_name: 'ABSPATH', value: dirname( path: __DIR__ ) . DIRECTORY_SEPARATOR );
+}
+
 if ( ! function_exists( function: 'add_action' ) ) {
     function add_action( mixed ...$args ): void {}
 }
