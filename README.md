@@ -3,15 +3,15 @@
 **Plugin Name:** JPKCom Gutenberg Image Block Alt-Attribute  
 **Plugin URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt  
 **Description:** SEO-friendly, dynamic updates for image block alt-attribute texts.  
-**Version:** 1.0.9  
+**Version:** 1.1.0  
 **Author:** Jean Pierre Kolb <jpk@jpkc.com>  
 **Author URI:** https://www.jpkc.com  
 **Contributors:** JPKCom  
 **Tags:** Gutenberg, SEO, Image, Block  
-**Requires at least:** 6.9  
+**Requires at least:** 7.0  
 **Tested up to:** 7.1  
 **Requires PHP:** 8.3  
-**Stable tag:** 1.0.9  
+**Stable tag:** 1.1.0  
 **License:** GPL-2.0-or-later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,13 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 
 
 ## Changelog
+
+### 1.1.0
+* Added: a read-only WordPress Ability, `jpkcom-gutenberg-img-alt/list-images-missing-alt`, so an AI assistant, an MCP client or REST automation can ask which images this plugin has nothing to inject for. That is a more useful question than "which images have no alt text": because the plugin takes the alt text from the **attachment** at render time, setting it once fixes every block that uses that image — no post has to be re-saved and no block markup has to be touched
+* Added: three values that look set in the media library but are not are reported and named rather than counted as fine. A single `0` is treated as empty by PHP and therefore skipped by the injection; alt text consisting only of spaces is skipped as well; and an image that never had alt text saved is a third, distinct case. Each is reported with a `reason`, so it is clear whether the field is empty or filled with something that does not work
+* Added: the ability requires the `upload_files` capability — deliberately stricter than the sibling JPKCom plugins, which publish content the site already shows to visitors. This one enumerates the media library, so subscribers are excluded. It can be switched off entirely with `define( 'JPKCOM_GUTENBERG_IMG_ALT_ABILITIES', false )` or narrowed further through a filter
+* Added: `Text Domain` and `Domain Path` headers, plus a translation template. The plugin had no translatable text at all before this release
+* Changed: WordPress 7.0 is now the minimum
 
 ### 1.0.9
 * CI: the release manifest declared `"network": true` for this plugin. The generator fell back to `true` when the plugin header carries no `Network:` line — which is the case here and is WordPress' own default for *not* network-only, so the fallback was inverted. The manifest now says `false`. This is metadata hygiene rather than a functional fix: WordPress derives network-only status from the plugin header via `is_network_only_plugin()`, not from the update manifest, and the bundled updater already defaulted to `false` on its own. A release is needed for it to take effect because the manifest is only regenerated on a tag push

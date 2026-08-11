@@ -67,6 +67,16 @@
                 <section class="phpdocumentor-sidebar__category -packages">
             <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="packages/JPKCom.html" class="">JPKCom</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="packages/JPKCom-Gutenberg.html" class="">Gutenberg</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="packages/JPKComGutenbergImgAlt.html" class="">JPKComGutenbergImgAlt</a>
 </h4>
 
@@ -108,6 +118,7 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/JPKCom.html"><abbr title="\JPKCom">JPKCom</abbr></a></dt>
             <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/JPKComGutenbergImgAlt.html"><abbr title="\JPKComGutenbergImgAlt">JPKComGutenbergImgAlt</abbr></a></dt>
             <dt class="phpdocumentor-table-of-contents__entry -package"><a href="packages/JPKComGutenbergImgAltGitUpdate.html"><abbr title="\JPKComGutenbergImgAltGitUpdate">JPKComGutenbergImgAltGitUpdate</abbr></a></dt>
     </dl>
@@ -132,9 +143,44 @@
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY</a>
+    <span>
+        &nbsp;: mixed&nbsp;= &#039;jpkcom-media&#039;                            </span>
+</dt>
+<dd>Ability category.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS</a>
+    <span>
+        &nbsp;: mixed&nbsp;= [&#039;jpkcom-gutenberg-img-alt/list-images-missing-...                            </span>
+</dt>
+<dd>Top-level input keys the ability declares.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX</a>
+    <span>
+        &nbsp;: mixed&nbsp;= \intdiv(num1: \PHP_INT_MAX, num2: \max(1, \JPKC...                            </span>
+</dt>
+<dd>Highest page number accepted.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT</a>
+    <span>
+        &nbsp;: mixed&nbsp;= 20                            </span>
+</dt>
+<dd>Default page size.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a class="" href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX</a>
+    <span>
+        &nbsp;: mixed&nbsp;= 100                            </span>
+</dt>
+<dd>Largest page size honoured.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a class="" href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_VERSION">JPKCOM_GUTENBERG_IMG_ALT_VERSION</a>
     <span>
-        &nbsp;: mixed&nbsp;= &#039;1.0.9&#039;                            </span>
+        &nbsp;: mixed&nbsp;= &#039;1.1.0&#039;                            </span>
 </dt>
 
     </dl>
@@ -148,6 +194,118 @@
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_abilities_enabled">jpkcom_gutenberg_img_alt_abilities_enabled()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Decide whether the ability should be registered at all.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_log">jpkcom_gutenberg_img_alt_ability_log()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Write a debug line, and only with WP_DEBUG.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_error">jpkcom_gutenberg_img_alt_ability_error()</a>
+    <span>
+                                &nbsp;: <abbr title="\WP_Error">WP_Error</abbr>    </span>
+</dt>
+<dd>Build a WP_Error carrying an HTTP status.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_boundary">jpkcom_gutenberg_img_alt_ability_boundary()</a>
+    <span>
+                                &nbsp;: array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr>    </span>
+</dt>
+<dd>Turn a Throwable out of the callback into a WP_Error.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_capability">jpkcom_gutenberg_img_alt_ability_capability()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Check the capability required to run the ability.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_meta">jpkcom_gutenberg_img_alt_ability_meta()</a>
+    <span>
+                                &nbsp;: array&lt;string, mixed&gt;    </span>
+</dt>
+<dd>Build the meta array for the ability.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_normalise_input">jpkcom_gutenberg_img_alt_ability_normalise_input()</a>
+    <span>
+                                &nbsp;: array&lt;string, mixed&gt;|null    </span>
+</dt>
+<dd>Bring the value core hands the callback into array form.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_validate_input_keys">jpkcom_gutenberg_img_alt_ability_validate_input_keys()</a>
+    <span>
+                                &nbsp;: true|<abbr title="\WP_Error">WP_Error</abbr>    </span>
+</dt>
+<dd>Refuse a top-level input key the ability does not declare.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_would_inject">jpkcom_gutenberg_img_alt_would_inject()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Would this plugin&#039;s filter inject an alt attribute for this stored value?</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_reason">jpkcom_gutenberg_img_alt_ability_reason()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Name why the filter would inject nothing, so a fixer knows what is there.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_permission">jpkcom_gutenberg_img_alt_ability_permission()</a>
+    <span>
+                                &nbsp;: bool    </span>
+</dt>
+<dd>Permission callback.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_list_inner">jpkcom_gutenberg_img_alt_ability_list_inner()</a>
+    <span>
+                                &nbsp;: array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr>    </span>
+</dt>
+<dd>List the image attachments the filter would find nothing to inject for.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_list">jpkcom_gutenberg_img_alt_ability_list()</a>
+    <span>
+                                &nbsp;: array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr>    </span>
+</dt>
+<dd>Execute callback.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_get_ability_definitions">jpkcom_gutenberg_img_alt_get_ability_definitions()</a>
+    <span>
+                                &nbsp;: array&lt;string, array&lt;string, mixed&gt;&gt;    </span>
+</dt>
+<dd>Build the registration arguments.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_register_ability_category">jpkcom_gutenberg_img_alt_register_ability_category()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Register the category, unless something already did.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_register_abilities">jpkcom_gutenberg_img_alt_register_abilities()</a>
+    <span>
+                                &nbsp;: void    </span>
+</dt>
+<dd>Register the ability.</dd>
+
             <dt class="phpdocumentor-table-of-contents__entry -function -">
     <a class="" href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_replace_alt_attribute">jpkcom_gutenberg_img_alt_replace_alt_attribute()</a>
     <span>
@@ -164,6 +322,246 @@
 
         </h3>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY">
+        JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">42</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Ability category.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;jpkcom-media&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"><p>NOT the jpkcom-content category the three content plugins share: this
+reports an editorial gap in the media library, not published content, and
+it is gated differently. Categories are global and first-wins, so
+registration goes through wp_has_ability_category() either way.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY_tags">
+        Tags
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_CATEGORY_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS">
+        JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">99</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Top-level input keys the ability declares.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;jpkcom-gutenberg-img-alt/list-images-missing-alt&#039; =&gt; [&#039;page&#039;, &#039;per_page&#039;]]</span>
+</code>
+
+
+        <section class="phpdocumentor-description"><p>Cross-checked against the registered schema by tests/test-abilities.php.
+additionalProperties is deliberately not declared on a schema that carries
+properties: validate_input() runs before the execute callback and would
+preempt the guard, replacing a message naming the accepted keys with core's
+&quot;not a valid property of the object&quot;.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS_tags">
+        Tags
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_INPUT_KEYS_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX">
+        JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Highest page number accepted.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX</span>
+    = <span class="phpdocumentor-signature__default-value">\intdiv(num1: \PHP_INT_MAX, num2: \max(1, \JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX))</span>
+</code>
+
+
+        <section class="phpdocumentor-description"><p>Derived rather than picked: the offset is a plain integer multiplication,
+and past PHP_INT_MAX it becomes a float that collapses to 0 - handing back
+page one's rows labelled as a page far beyond the last.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX_tags">
+        Tags
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PAGE_MAX_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT">
+        JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">53</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Default page size.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT</span>
+    = <span class="phpdocumentor-signature__default-value">20</span>
+</code>
+
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT_tags">
+        Tags
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_DEFAULT_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX">
+        JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">64</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Largest page size honoured.</p>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX</span>
+    = <span class="phpdocumentor-signature__default-value">100</span>
+</code>
+
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX_tags">
+        Tags
+        <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_ABILITY_PER_PAGE_MAX_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+        
+    </article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_JPKCOM_GUTENBERG_IMG_ALT_VERSION">
         JPKCOM_GUTENBERG_IMG_ALT_VERSION
         <a href="namespaces/default.html#constant_JPKCOM_GUTENBERG_IMG_ALT_VERSION" class="headerlink"><i class="fas fa-link"></i></a>
@@ -173,7 +571,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="jpkcom-gutenberg-img-alt.php"><a href="files/jpkcom-gutenberg-img-alt.html">jpkcom-gutenberg-img-alt.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">32</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -183,7 +581,7 @@
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">JPKCOM_GUTENBERG_IMG_ALT_VERSION</span>
-    = <span class="phpdocumentor-signature__default-value">&#039;1.0.9&#039;</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;1.1.0&#039;</span>
 </code>
 
 
@@ -202,6 +600,984 @@
 
         </h3>
                     <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_abilities_enabled">
+        jpkcom_gutenberg_img_alt_abilities_enabled()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_abilities_enabled" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">118</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Decide whether the ability should be registered at all.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_abilities_enabled</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_abilities_enabled_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_abilities_enabled_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True when registration should proceed.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_log">
+        jpkcom_gutenberg_img_alt_ability_log()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_log" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">144</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Write a debug line, and only with WP_DEBUG.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_log</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$message</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Message.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_log_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_log_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_error">
+        jpkcom_gutenberg_img_alt_ability_error()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_error" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">173</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Build a WP_Error carrying an HTTP status.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_error</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$code</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$status</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">400</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\WP_Error">WP_Error</abbr></span></code>
+
+        <section class="phpdocumentor-description"><p>Without data['status'] rest_ensure_response() defaults to 500, and a 5xx
+tells an agent &quot;transient fault, retry unchanged&quot; - the opposite of what a
+caller mistake needs to hear.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$code</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Error code.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$message</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Message.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$status</span>
+                : <span class="phpdocumentor-argument-list__argument__type">int</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">400</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>HTTP status.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_error_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_error_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\WP_Error">WP_Error</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Error.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_boundary">
+        jpkcom_gutenberg_img_alt_ability_boundary()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_boundary" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">193</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Turn a Throwable out of the callback into a WP_Error.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_boundary</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$body</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ability</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr></span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$body</span>
+                : <span class="phpdocumentor-argument-list__argument__type">callable</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Callback.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ability</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Ability name.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_boundary_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_boundary_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Result or error.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_capability">
+        jpkcom_gutenberg_img_alt_ability_capability()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_capability" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">232</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Check the capability required to run the ability.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_capability</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ability</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p><code class="prettyprint">upload_files</code>, NOT <code class="prettyprint">read</code> like the sibling content plugins. Those publish
+content the site already shows to visitors; this enumerates the media
+library, where file names and unattached uploads are editorial internals.
+The capability that means &quot;works with media&quot; is the honest gate, and it
+excludes subscribers.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ability</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Ability name.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_capability_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_capability_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True when the current user may run it.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_meta">
+        jpkcom_gutenberg_img_alt_ability_meta()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_meta" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">265</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Build the meta array for the ability.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_meta</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ability</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span></code>
+
+        <section class="phpdocumentor-description"><p>All three annotations explicit: they default to null and the REST run
+controller derives the HTTP verb from them, so without readonly the run
+route would be POST-only.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$ability</span>
+                : <span class="phpdocumentor-argument-list__argument__type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Ability name.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_meta_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_meta_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Meta array.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_normalise_input">
+        jpkcom_gutenberg_img_alt_ability_normalise_input()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_normalise_input" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">310</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Bring the value core hands the callback into array form.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_normalise_input</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$input</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|null</span></code>
+
+        <section class="phpdocumentor-description"><p>normalize_input() substitutes the schema's top-level default when the input
+is exactly null, and that default is a stdClass - so the callback receives
+an object and must read it. A callback that only accepts an array answers
+400 to the most obvious call it has.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$input</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Raw input.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_normalise_input_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_normalise_input_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|null</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Array form, or null when unusable.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_validate_input_keys">
+        jpkcom_gutenberg_img_alt_ability_validate_input_keys()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_validate_input_keys" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">342</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Refuse a top-level input key the ability does not declare.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_validate_input_keys</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">array&lt;string, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$input</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">array&lt;string|int, string&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$allowed</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">true|<abbr title="\WP_Error">WP_Error</abbr></span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$input</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Raw input.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$allowed</span>
+                : <span class="phpdocumentor-argument-list__argument__type">array&lt;string|int, string&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Declared keys.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_validate_input_keys_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_validate_input_keys_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">true|<abbr title="\WP_Error">WP_Error</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True when every key is declared.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_would_inject">
+        jpkcom_gutenberg_img_alt_would_inject()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_would_inject" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">403</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Would this plugin&#039;s filter inject an alt attribute for this stored value?</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_would_inject</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stored</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"><p>THE load-bearing function of this file, and deliberately not a paraphrase
+of the rule. The filter gates on <code class="prettyprint">! empty( $alt )</code> and the replacer then
+returns the block unchanged when <code class="prettyprint">'' === trim( $alt )</code>. Two consequences
+follow that a reasonable-looking check would get wrong:</p>
+<ul>
+<li>An alt of the single character &quot;0&quot; is EMPTY to PHP, so nothing is
+injected. A check for <code class="prettyprint">$alt !== ''</code> would call that image supplied.</li>
+<li>An alt of only spaces passes <code class="prettyprint">! empty()</code> but is stopped by the trim in
+the replacer. A check that mirrored only the first gate would call that
+image supplied too.</li>
+</ul>
+<p>Reporting an image as fine when the mechanism has nothing to inject for it
+is the one answer this ability must never give, because it is the answer
+that stops someone looking.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$stored</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Raw stored alt value.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_would_inject_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_would_inject_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True when the filter would inject.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_reason">
+        jpkcom_gutenberg_img_alt_ability_reason()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_reason" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">429</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Name why the filter would inject nothing, so a fixer knows what is there.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_reason</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stored</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$row_found</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$stored</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Raw stored value.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$row_found</span>
+                : <span class="phpdocumentor-argument-list__argument__type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether a meta row exists at all.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_reason_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_reason_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">string</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>One of no_row, empty, zero, whitespace_only.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_permission">
+        jpkcom_gutenberg_img_alt_ability_permission()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_permission" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">470</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Permission callback.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_permission</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$input</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$input</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Validated input, unused.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_permission_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_permission_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">bool</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>True when the current user may run the ability.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_list_inner">
+        jpkcom_gutenberg_img_alt_ability_list_inner()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_list_inner" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">493</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">List the image attachments the filter would find nothing to inject for.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_list_inner</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$input</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr></span></code>
+
+        <section class="phpdocumentor-description"><p>Queried with one statement rather than by walking the library in PHP: the
+predicate needs TRIM(), which no meta_query comparison expresses, and a
+page-by-page PHP filter would make <code class="prettyprint">total</code> a guess.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$input</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Ability input.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_list_inner_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_list_inner_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Result.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_ability_list">
+        jpkcom_gutenberg_img_alt_ability_list()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_list" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">625</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Execute callback.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_ability_list</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$input</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr></span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-argument-list__argument__name">$input</span>
+                : <span class="phpdocumentor-argument-list__argument__type">mixed</span>
+                 = <span class="phpdocumentor-argument-list__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Ability input.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_ability_list_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_ability_list_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, mixed&gt;|<abbr title="\WP_Error">WP_Error</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Result.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_get_ability_definitions">
+        jpkcom_gutenberg_img_alt_get_ability_definitions()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_get_ability_definitions" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">649</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Build the registration arguments.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_get_ability_definitions</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, mixed&gt;&gt;</span></code>
+
+        <section class="phpdocumentor-description"><p>Reads no WordPress state and touches no registry, which is what lets the CI
+harness assert the shape without a WordPress installation.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_get_ability_definitions_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_get_ability_definitions_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type">array&lt;string, array&lt;string, mixed&gt;&gt;</span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Ability name =&gt; registration args.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_register_ability_category">
+        jpkcom_gutenberg_img_alt_register_ability_category()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_register_ability_category" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">736</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Register the category, unless something already did.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_register_ability_category</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_register_ability_category_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_register_ability_category_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_register_abilities">
+        jpkcom_gutenberg_img_alt_register_abilities()
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_register_abilities" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">783</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Register the ability.</p>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                    <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_register_abilities</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"><p>wp_register_ability() returns null on EVERY failure path and reports only
+through _doing_it_wrong(), which is silent in production - and so is the
+debug log without WP_DEBUG.</p>
+</section>
+
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="function_jpkcom_gutenberg_img_alt_register_abilities_tags">
+        Tags
+        <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_register_abilities_tags" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                    <dt class="phpdocumentor-tag-list__entry">
+                <span class="phpdocumentor-tag__name">since</span>
+            </dt>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.1.0</span>
+                                                                                                        
+                                    </dd>
+                        </dl>
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
     <h4 class="phpdocumentor-element__name" id="function_jpkcom_gutenberg_img_alt_replace_alt_attribute">
         jpkcom_gutenberg_img_alt_replace_alt_attribute()
         <a href="namespaces/default.html#function_jpkcom_gutenberg_img_alt_replace_alt_attribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -210,7 +1586,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="jpkcom-gutenberg-img-alt.php"><a href="files/jpkcom-gutenberg-img-alt.html">jpkcom-gutenberg-img-alt.php</a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
