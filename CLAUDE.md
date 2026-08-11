@@ -4,8 +4,8 @@
 
 SEO helper that keeps the `alt` attribute of rendered `core/image` blocks in sync with the attachment's stored alt text. On every front-end render it reads `_wp_attachment_image_alt` for the image's attachment ID and rewrites the `alt="…"` in the block HTML.
 
-- **Text Domain:** none declared (defaults to slug `jpkcom-gutenberg-img-alt`)
-- **Min PHP:** 8.3 | **Min WP:** 6.9
+- **Text Domain:** `jpkcom-gutenberg-img-alt`, `Domain Path: /languages` — both added in 1.1.0, because the abilities brought the first translatable strings this plugin ever had
+- **Min PHP:** 8.3 | **Min WP:** 7.0
 - **Network:** not network-only (no `Network:` header)
 
 ---
@@ -72,6 +72,66 @@ jpkcom-gutenberg-img-alt/
 Triggered by **pushing a `v*` tag**; the workflow creates the GitHub release automatically. Pipeline: setup PHP/Python/Pandoc/GraphViz → README metadata → slug-named ZIP → SHA256 → upload ZIP + `.sha256` → `plugin_<slug>.json` manifest → PHPDoc → deploy to `gh-pages`.
 
 ---
+
+## Abilities API (since 1.1.0)
+
+`includes/abilities.php` registers one read-only ability, `jpkcom-gutenberg-img-alt/list-images-missing-alt`,
+in its own `jpkcom-media` category — **not** the `jpkcom-content` category the three content plugins
+share, because this reports an editorial gap in the media library rather than published content, and
+it is gated differently.
+
+### Why this question and not "which images have no alt text"
+
+The filter overwrites a rendered block's `alt` with the **attachment's** alt text, which makes the
+attachment the single source of truth: setting it once fixes every block using that image, with no
+post to re-save. What the mechanism cannot do is invent an alt where the attachment has none. That
+residual gap is what the ability reports — a question this plugin is uniquely placed to answer.
+
+### The one thing that must not drift
+
+`jpkcom_gutenberg_img_alt_would_inject()` has to give the same answer as the injection itself, and
+the injection is TWO gates, not one:
+
+```php
+if ( ! empty( $alt ) ) { ... }                 // the filter
+if ( '' === trim( $alt ) ) return $unchanged;  // the replacer
+```
+
+Two consequences a reasonable-looking check gets wrong:
+
+- **An alt of the single character `0` is empty to PHP**, so nothing is injected. A check for
+  `$alt !== ''` calls that image supplied.
+- **An alt of only spaces** passes `! empty()` and is then stopped by the trim. A check mirroring
+  only the first gate calls that image supplied too.
+
+Reporting an image as fine when the mechanism has nothing to inject for it is the one answer this
+ability must never give, **because it is the answer that stops someone looking.**
+`tests/test-abilities.php` executes both the predicate and the real replacer over nine awkward values
+and compares them; mutating the predicate to `$alt !== ''` reddens exactly the three cases above.
+Verified at runtime as well, by running the actual `render_block` filter over a real `core/image`
+block for each fixture and comparing what it did with what the ability said: zero disagreements.
+
+> Firing that filter in a test needs **three** arguments — core's own duotone callback is registered
+> on `render_block` and requires the `WP_Block` instance. Two arguments fatal there and prove nothing.
+
+### The SQL, and why it is SQL
+
+One statement rather than walking the library in PHP: the predicate needs `TRIM()`, which no
+`meta_query` comparison expresses, and a page-by-page PHP filter would make `total` a guess. Scope is
+`post_type = attachment`, an image MIME type, and status `inherit` or `publish` — trashed and private
+uploads are nobody's publishing gap.
+
+### Exposure
+
+Default capability **`upload_files`**, not `read`. The content plugins publish what the site already
+shows visitors; this walks the media library, where file names and unattached uploads are editorial
+internals. `JPKCOM_GUTENBERG_IMG_ALT_ABILITIES = false` in `wp-config.php` suppresses registration;
+`jpkcom_gutenberg_img_alt_ability_capability` and `jpkcom_gutenberg_img_alt_ability_meta` narrow it
+further. Measured: anonymous and subscriber denied, author and admin allowed.
+
+> **The Abilities API messages stay English, in every language.** They are read by MCP clients and
+> agents, and their wording is the feature. All 33 catalogue entries are untranslated on purpose —
+> do not read an empty `msgstr` here as a backlog.
 
 ## Security Checklist
 
