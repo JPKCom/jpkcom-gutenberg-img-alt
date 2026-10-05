@@ -1112,7 +1112,7 @@ an object and must read it. A callback that only accepts an array answers
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">403</span>
+    <span class="phpdocumentor-element-found-in__line">410</span>
 
     </aside>
 
@@ -1124,15 +1124,21 @@ an object and must read it. A callback that only accepts an array answers
                     <span class="phpdocumentor-signature__name">jpkcom_gutenberg_img_alt_would_inject</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$stored</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
 
         <section class="phpdocumentor-description"><p>THE load-bearing function of this file, and deliberately not a paraphrase
-of the rule. The filter gates on <code class="prettyprint">! empty( $alt )</code> and the replacer then
-returns the block unchanged when <code class="prettyprint">'' === trim( $alt )</code>. Two consequences
-follow that a reasonable-looking check would get wrong:</p>
+of the rule. The filter gates on <code class="prettyprint">is_string( $alt ) &amp;&amp; ! empty( $alt )</code>
+and the replacer then returns the block unchanged when
+<code class="prettyprint">'' === trim( $alt )</code>. Three consequences follow that a reasonable-looking
+check would get wrong:</p>
 <ul>
 <li>An alt of the single character &quot;0&quot; is EMPTY to PHP, so nothing is
 injected. A check for <code class="prettyprint">$alt !== ''</code> would call that image supplied.</li>
 <li>An alt of only spaces passes <code class="prettyprint">! empty()</code> but is stopped by the trim in
 the replacer. A check that mirrored only the first gate would call that
 image supplied too.</li>
+<li>A value written programmatically as an array or object is stored
+serialised and comes back from get_post_meta() as that array or object,
+which is not text. Its raw meta_value is a non-empty string, so a check
+on the raw row would call that image supplied as well. The predicate
+therefore unserialises first, as get_post_meta() does.</li>
 </ul>
 <p>Reporting an image as fine when the mechanism has nothing to inject for it
 is the one answer this ability must never give, because it is the answer
@@ -1166,6 +1172,12 @@ that stops someone looking.</p>
                                             <span class="phpdocumentor-tag-link">1.1.0</span>
                                                                                                         
                                     </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
+                                                                                                            <section class="phpdocumentor-description"><p>Unserialises like get_post_meta(); non-text values never inject.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
             <section>
@@ -1187,7 +1199,7 @@ that stops someone looking.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">429</span>
+    <span class="phpdocumentor-element-found-in__line">439</span>
 
     </aside>
 
@@ -1235,13 +1247,19 @@ that stops someone looking.</p>
                                             <span class="phpdocumentor-tag-link">1.1.0</span>
                                                                                                         
                                     </dd>
+                            <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">1.2.0</span>
+                                                                                                            <section class="phpdocumentor-description"><p>Added not_text.</p>
+</section>
+
+                                    </dd>
                         </dl>
 
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string</span>
                     &mdash;
-                <section class="phpdocumentor-description"><p>One of no_row, empty, zero, whitespace_only.</p>
+                <section class="phpdocumentor-description"><p>One of no_row, empty, zero, whitespace_only, not_text.</p>
 </section>
 
             </section>
@@ -1256,7 +1274,7 @@ that stops someone looking.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">470</span>
+    <span class="phpdocumentor-element-found-in__line">486</span>
 
     </aside>
 
@@ -1316,7 +1334,7 @@ that stops someone looking.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">493</span>
+    <span class="phpdocumentor-element-found-in__line">509</span>
 
     </aside>
 
@@ -1380,7 +1398,7 @@ page-by-page PHP filter would make <code class="prettyprint">total</code> a gues
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">625</span>
+    <span class="phpdocumentor-element-found-in__line">659</span>
 
     </aside>
 
@@ -1440,7 +1458,7 @@ page-by-page PHP filter would make <code class="prettyprint">total</code> a gues
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">649</span>
+    <span class="phpdocumentor-element-found-in__line">683</span>
 
     </aside>
 
@@ -1491,7 +1509,7 @@ harness assert the shape without a WordPress installation.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">736</span>
+    <span class="phpdocumentor-element-found-in__line">770</span>
 
     </aside>
 
@@ -1531,7 +1549,7 @@ harness assert the shape without a WordPress installation.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="includes/abilities.php"><a href="files/includes-abilities.html"><abbr title="includes/abilities.php">abilities.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">783</span>
+    <span class="phpdocumentor-element-found-in__line">817</span>
 
     </aside>
 

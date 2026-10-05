@@ -3,7 +3,7 @@
 **Plugin Name:** JPKCom Gutenberg Image Block Alt-Attribute  
 **Plugin URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt  
 **Description:** SEO-friendly, dynamic updates for image block alt-attribute texts.  
-**Version:** 1.1.0  
+**Version:** 1.2.0  
 **Author:** Jean Pierre Kolb <jpk@jpkc.com>  
 **Author URI:** https://www.jpkc.com  
 **Contributors:** JPKCom  
@@ -11,7 +11,7 @@
 **Requires at least:** 7.0  
 **Tested up to:** 7.1  
 **Requires PHP:** 8.3  
-**Stable tag:** 1.1.0  
+**Stable tag:** 1.2.0  
 **License:** GPL-2.0-or-later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,6 +37,16 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 
 
 ## Changelog
+
+### 1.2.0
+* Changed: the alt text is now set with WordPress' HTML Tag Processor (`WP_HTML_Tag_Processor`) instead of a regular expression. The expression only handled the exact markup core produces and failed silently on anything else: it could overwrite a `data-alt` attribute instead of `alt`, found nothing when another attribute contained a `>` or when `alt` was single-quoted, bare or upper-case, and could pick up an `<img` inside a comment or an attribute value. The Tag Processor parses the block like a browser does and avoids all of these
+* Changed: an image block whose `<img>` has no `alt` attribute at all now receives one. Previously only an existing attribute could be rewritten
+* Changed: only the first `<img>` of a block is changed — a core Image block renders exactly one
+* Changed: the filter hooks `render_block_core/image` instead of the generic `render_block`, so it no longer runs for every other block on the page
+* Fixed: an alt text that literally contains an entity such as `&amp;` is now escaped completely and shown as typed; `esc_attr()` left such sequences alone
+* Fixed: an alt text stored as an array or object — possible only when code writes `_wp_attachment_image_alt` directly, never through the media library — was cast to a string and injected as the literal word `Array`, together with a PHP warning. The filter now injects only text values and leaves the block unchanged otherwise
+* Changed: the ability `jpkcom-gutenberg-img-alt/list-images-missing-alt` reports such images too, with the new `reason` value `not_text`. It reads the stored value the way `get_post_meta()` does, so an image is never reported as fine when the plugin has nothing usable to inject for it
+* Tests: the replacement tests now run against WordPress' real HTML Tag Processor — CI checks out the HTML API from WordPress 7.1.2, pinned to its commit — and cover each markup case above. The agreement check between the ability and the injection now also covers serialised arrays, objects, integers, booleans and `null`, serialised strings, and text that only looks serialised
 
 ### 1.1.0
 * Added: a read-only WordPress Ability, `jpkcom-gutenberg-img-alt/list-images-missing-alt`, so an AI assistant, an MCP client or REST automation can ask which images this plugin has nothing to inject for. That is a more useful question than "which images have no alt text": because the plugin takes the alt text from the **attachment** at render time, setting it once fixes every block that uses that image — no post has to be re-saved and no block markup has to be touched

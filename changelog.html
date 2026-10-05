@@ -1,4 +1,46 @@
-<h3 id="section">1.1.0</h3>
+<h3 id="section">1.2.0</h3>
+<ul>
+<li>Changed: the alt text is now set with WordPress’ HTML Tag Processor
+(<code>WP_HTML_Tag_Processor</code>) instead of a regular expression.
+The expression only handled the exact markup core produces and failed
+silently on anything else: it could overwrite a <code>data-alt</code>
+attribute instead of <code>alt</code>, found nothing when another
+attribute contained a <code>&gt;</code> or when <code>alt</code> was
+single-quoted, bare or upper-case, and could pick up an
+<code>&lt;img</code> inside a comment or an attribute value. The Tag
+Processor parses the block like a browser does and avoids all of
+these</li>
+<li>Changed: an image block whose <code>&lt;img&gt;</code> has no
+<code>alt</code> attribute at all now receives one. Previously only an
+existing attribute could be rewritten</li>
+<li>Changed: only the first <code>&lt;img&gt;</code> of a block is
+changed — a core Image block renders exactly one</li>
+<li>Changed: the filter hooks <code>render_block_core/image</code>
+instead of the generic <code>render_block</code>, so it no longer runs
+for every other block on the page</li>
+<li>Fixed: an alt text that literally contains an entity such as
+<code>&amp;amp;</code> is now escaped completely and shown as typed;
+<code>esc_attr()</code> left such sequences alone</li>
+<li>Fixed: an alt text stored as an array or object — possible only when
+code writes <code>_wp_attachment_image_alt</code> directly, never
+through the media library — was cast to a string and injected as the
+literal word <code>Array</code>, together with a PHP warning. The filter
+now injects only text values and leaves the block unchanged
+otherwise</li>
+<li>Changed: the ability
+<code>jpkcom-gutenberg-img-alt/list-images-missing-alt</code> reports
+such images too, with the new <code>reason</code> value
+<code>not_text</code>. It reads the stored value the way
+<code>get_post_meta()</code> does, so an image is never reported as fine
+when the plugin has nothing usable to inject for it</li>
+<li>Tests: the replacement tests now run against WordPress’ real HTML
+Tag Processor — CI checks out the HTML API from WordPress 7.1.2, pinned
+to its commit — and cover each markup case above. The agreement check
+between the ability and the injection now also covers serialised arrays,
+objects, integers, booleans and <code>null</code>, serialised strings,
+and text that only looks serialised</li>
+</ul>
+<h3 id="section-1">1.1.0</h3>
 <ul>
 <li>Added: a read-only WordPress Ability,
 <code>jpkcom-gutenberg-img-alt/list-images-missing-alt</code>, so an AI
@@ -27,7 +69,7 @@ headers, plus a translation template. The plugin had no translatable
 text at all before this release</li>
 <li>Changed: WordPress 7.0 is now the minimum</li>
 </ul>
-<h3 id="section-1">1.0.9</h3>
+<h3 id="section-2">1.0.9</h3>
 <ul>
 <li>CI: the release manifest declared <code>"network": true</code> for
 this plugin. The generator fell back to <code>true</code> when the
@@ -44,7 +86,7 @@ regenerated on a tag push</li>
 <code>main</code>. The required status check only ever applied to pull
 requests, so a direct push with bypass rights skipped every check</li>
 </ul>
-<h3 id="section-2">1.0.8</h3>
+<h3 id="section-3">1.0.8</h3>
 <ul>
 <li>Fixed: alt text containing <code>$1</code>, <code>${1}</code>,
 <code>$2</code> or <code>\1</code> corrupted the rendered image tag.
@@ -68,7 +110,7 @@ multiple images per block)</li>
 <code>function_exists()</code> so a duplicate plugin copy cannot trigger
 a redeclare fatal</li>
 </ul>
-<h3 id="section-3">1.0.7</h3>
+<h3 id="section-4">1.0.7</h3>
 <ul>
 <li>Changed: <code>Tested up to</code> raised to WordPress 7.1</li>
 <li>Changed: the bundled updater’s runtime floor now matches the
@@ -80,7 +122,7 @@ and <code>tested</code> now say 6.9 and 7.1. They only apply when the
 README metadata cannot be read, but a stale fallback would have
 published a minimum the plugin no longer supports</li>
 </ul>
-<h3 id="section-4">1.0.6</h3>
+<h3 id="section-5">1.0.6</h3>
 <ul>
 <li>Added: plugin banners (<code>assets/banner-1544x500.avif</code>,
 <code>assets/banner-772x250.avif</code>) — a plain <code>#3c4955</code>
@@ -88,7 +130,7 @@ surface with no lettering. The update manifest already advertised these
 two URLs, but nothing was published under them, so the plugin card in
 wp-admin had a broken banner</li>
 </ul>
-<h3 id="section-5">1.0.5</h3>
+<h3 id="section-6">1.0.5</h3>
 <ul>
 <li>CI: the release step no longer copies the staging directory into
 itself, so the ZIP has no empty
@@ -102,7 +144,7 @@ to full commit SHAs</li>
 <li>CI: security and regression tests now run on every pull request,
 where a plugin has them</li>
 </ul>
-<h3 id="section-6">1.0.4</h3>
+<h3 id="section-7">1.0.4</h3>
 <ul>
 <li>Security: update packages are now verified <em>before</em>
 installation — the verified file is handed to WordPress instead of being
@@ -127,11 +169,11 @@ instead of being retried on every admin request</li>
 <li>Added: CI workflow on every pull request (PHP lint, named-argument
 check, YAML validation, action-pinning guard)</li>
 </ul>
-<h3 id="section-7">1.0.3</h3>
+<h3 id="section-8">1.0.3</h3>
 <ul>
 <li>Docs: linked the published PHPDoc API documentation</li>
 </ul>
-<h3 id="section-8">1.0.2</h3>
+<h3 id="section-9">1.0.2</h3>
 <ul>
 <li>Added secure self-hosted plugin updates via GitHub with SHA256
 checksum verification</li>
@@ -146,11 +188,11 @@ gh-pages on release</li>
 <li>Hardening: enabled <code>declare(strict_types=1)</code> and added
 precise closure parameter/return types</li>
 </ul>
-<h3 id="section-9">1.0.1</h3>
+<h3 id="section-10">1.0.1</h3>
 <ul>
 <li>Replacement bugfix</li>
 </ul>
-<h3 id="section-10">1.0.0</h3>
+<h3 id="section-11">1.0.0</h3>
 <ul>
 <li>Initial Release</li>
 </ul>
