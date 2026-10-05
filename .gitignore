@@ -63,6 +63,9 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 /wp/
 /wp/*
 
+# WordPress HTML API checked out by CI for the tests
+/.wp/
+
 # phpDocumentor
 .phpdoc/
 docs/

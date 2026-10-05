@@ -18,12 +18,24 @@ Main file (jpkcom-gutenberg-img-alt.php)
 ├── Plugin header
 ├── JPKCOM_GUTENBERG_IMG_ALT_VERSION constant
 ├── init @ priority 5: boot JPKComGitPluginUpdater
-└── render_block filter (priority 10, 2 args):
-    core/image + attrs.id → get_post_meta(_wp_attachment_image_alt)
-    → preg_replace the alt="" in the rendered HTML (esc_attr the value)
+└── render_block_core/image filter (priority 10, 2 args):
+    attrs.id → get_post_meta(_wp_attachment_image_alt)
+    → string, not empty → WP_HTML_Tag_Processor sets alt on the first <img>
 ```
 
-The callback is typed `( string $block_content, array $block ): string`. The attachment id is cast to `int`, `blockName` is read null-safe, and `preg_replace()` falls back to the original content if it returns `null`.
+The callback is typed `( string $block_content, array $block ): string`. The attachment id is cast to `int`.
+
+### Why the HTML Tag Processor and not a regular expression (since 1.2.0)
+
+Up to 1.1.0 the replacer was `/(<img[^>]+alt=")[^"]*("[^>]*>)/`. It worked on core's own markup and
+failed on anything else, silently: the greedy `[^>]+` ran on to the **last** `alt="` and overwrote
+`data-alt` instead of `alt`; a `>` inside another attribute value, a single-quoted or bare `alt`, or an
+upper-case `ALT` meant no match at all; an `<img` inside a comment or attribute value was taken for the
+real one; and an image without `alt` could never get one. `WP_HTML_Tag_Processor` parses like a browser
+and avoids all of that, and `set_attribute()` writes the value literally with its own escaping (it
+also escapes an `&` that already looks like an entity, which `esc_attr()` did not). Only the first
+`<img>` is changed — `core/image` renders exactly one. `tests/test-alt-replacement.php` holds a case for
+each of these; the old regex fails 9 of its 16 cases.
 
 ---
 
@@ -41,7 +53,12 @@ The callback is typed `( string $block_content, array $block ): string`. The att
 jpkcom-gutenberg-img-alt/
 ├── jpkcom-gutenberg-img-alt.php  ← Main: header, constant, render_block filter, updater bootstrap
 ├── includes/
+│   ├── abilities.php             ← Abilities API: list-images-missing-alt
 │   └── class-plugin-updater.php  ← GitHub auto-updater (namespace: JPKComGutenbergImgAltGitUpdate)
+├── tests/
+│   ├── bootstrap-html-api.php    ← Loads core's real WP_HTML_Tag_Processor (see "Tests")
+│   └── test-*.php                ← Run by CI, excluded from the release ZIP
+├── .github/workflows/ci.yml      ← Lint, guards, tests (PRs + pushes to main)
 ├── .github/workflows/release.yml ← Build ZIP, manifest, PHPDoc, deploy to gh-pages (on tag push)
 ├── phpdoc.xml                    ← phpDocumentor config
 ├── README.md                     ← Public readme (source for the WP plugin modal)
@@ -90,31 +107,49 @@ residual gap is what the ability reports — a question this plugin is uniquely 
 ### The one thing that must not drift
 
 `jpkcom_gutenberg_img_alt_would_inject()` has to give the same answer as the injection itself, and
-the injection is TWO gates, not one:
+the injection is THREE gates, not one:
 
 ```php
-if ( ! empty( $alt ) ) { ... }                 // the filter
-if ( '' === trim( $alt ) ) return $unchanged;  // the replacer
+$alt = get_post_meta( ... );                                // unserialises the row
+if ( is_string( $alt ) && ! empty( $alt ) ) { ... }        // the filter
+if ( '' === trim( $alt ) ) return $unchanged;              // the replacer
 ```
 
-Two consequences a reasonable-looking check gets wrong:
+Three consequences a reasonable-looking check gets wrong:
 
 - **An alt of the single character `0` is empty to PHP**, so nothing is injected. A check for
   `$alt !== ''` calls that image supplied.
 - **An alt of only spaces** passes `! empty()` and is then stopped by the trim. A check mirroring
   only the first gate calls that image supplied too.
+- **A serialised array or object** (written by code, never by the media modal) is a non-empty raw
+  `meta_value`, but `get_post_meta()` returns it unserialised and the `is_string()` gate skips it.
+  Before 1.2.0 the filter cast it and injected the literal word `Array`. A check on the raw row calls
+  that image supplied; the predicate therefore runs `maybe_unserialize()` first and reports it as
+  `not_text`.
 
 Reporting an image as fine when the mechanism has nothing to inject for it is the one answer this
 ability must never give, **because it is the answer that stops someone looking.**
-`tests/test-abilities.php` executes both the predicate and the real replacer over nine awkward values
-and compares them; mutating the predicate to `$alt !== ''` reddens exactly the three cases above.
-Verified at runtime as well, by running the actual `render_block` filter over a real `core/image`
+`tests/test-abilities.php` executes both the predicate and the real replacer over sixteen awkward values
+(raw rows go through a port of core's `is_serialized()`/`maybe_unserialize()` first) and compares them;
+mutating the predicate to `$alt !== ''` reddens the `0` and whitespace cases, dropping the unserialise
+reddens the five serialised non-text cases.
+Verified at runtime for 1.1.0, by running the then `render_block` filter over a real `core/image`
 block for each fixture and comparing what it did with what the ability said: zero disagreements.
+Not repeated for 1.2.0's `render_block_core/image` hook; the gates the predicate mirrors are unchanged
+and the test executes the real replacer.
 
-> Firing that filter in a test needs **three** arguments — core's own duotone callback is registered
-> on `render_block` and requires the `WP_Block` instance. Two arguments fatal there and prove nothing.
+> Firing `render_block` in a test needs **three** arguments — core's own duotone callback is registered
+> there and requires the `WP_Block` instance. Two arguments fatal there and prove nothing.
 
 ### The SQL, and why it is SQL
+
+The `not_text` branch mirrors `is_serialized()` (strict) for every type token except `s`. The token
+is compared with `ASCII()`, not inside the `REGEXP`: `meta_value` has a case-insensitive collation,
+so `'^[bid]'` would also match `I:42;`, which is text to PHP. `REGEXP BINARY` would fix that on
+MariaDB but is an error on MySQL 8 (ICU). Checked against MariaDB 11.8 with the PHP rule over 21
+values, zero disagreements; not run on MySQL. Known residue: the collation still makes `[0-9.E+-]`
+accept a lowercase `e`, so an alt typed as e.g. `d:1e5;` would be listed although it injects.
+That errs towards reporting, never towards a false all-clear.
 
 One statement rather than walking the library in PHP: the predicate needs `TRIM()`, which no
 `meta_query` comparison expresses, and a page-by-page PHP filter would make `total` a guess. Scope is
@@ -136,9 +171,27 @@ further. Measured: anonymous and subscriber denied, author and admin allowed.
 ## Security Checklist
 
 - `declare(strict_types=1)` in every PHP file
-- Typed `render_block` callback; attachment id cast to `int`
-- Alt text escaped with `esc_attr()` before injection
+- Typed `render_block_core/image` callback; attachment id cast to `int`
+- Only string meta values are injected (`is_string()`), never a cast array or object
+- Alt text set through `WP_HTML_Tag_Processor::set_attribute()`, which escapes it and never
+  interprets it — no regular expression touches the markup
 - Updater: SHA256 verification + URL validation (audited separately)
+
+---
+
+## Tests
+
+`tests/test-*.php` are plain PHP scripts without WordPress. The replacer needs core's real
+`WP_HTML_Tag_Processor`, which `tests/bootstrap-html-api.php` loads from:
+
+- **CI:** `.wp/wp-includes`, a sparse checkout of `WordPress/WordPress` pinned to the commit of the
+  7.1.2 tag (`ci.yml`, step "Fetch the WordPress HTML API"). Bump that SHA *and* its comment together.
+- **Locally:** `WP_INCLUDES_DIR=/path/to/wordpress/wp-includes php tests/test-alt-replacement.php`.
+
+Without either the bootstrap **fails** the run instead of skipping it. It stubs only what the processor
+calls for an `alt` and makes the misuse paths throw (`_doing_it_wrong()`, `esc_url()`). Run against
+WordPress 7.0, 7.0.4, 7.1 and 7.1.2: all green. 7.0's `utf8.php` needs `_wp_can_use_pcre_u()` while
+loading, so the bootstrap provides it.
 
 ---
 

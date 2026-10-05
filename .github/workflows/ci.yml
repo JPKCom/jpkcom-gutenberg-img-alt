@@ -115,6 +115,24 @@ jobs:
           CHECK
           php /tmp/named_args_check.php
 
+      - name: Fetch the WordPress HTML API for the tests
+        # The alt replacement runs on WP_HTML_Tag_Processor, and the tests execute
+        # the real class rather than a stand-in (tests/bootstrap-html-api.php).
+        # Pinned to the commit of the WordPress 7.1.2 tag in the WordPress build
+        # mirror - a commit SHA cannot be repointed. Only the files the processor
+        # needs are checked out, into .wp/, after lint has already run.
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+        with:
+          repository: WordPress/WordPress
+          ref: 160387b7312c9407c7fe4b1d3dd2055206749a34  # 7.1.2
+          path: .wp
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            wp-includes/html-api/
+            wp-includes/class-wp-token-map.php
+            wp-includes/utf8.php
+
       - name: Security and regression tests (if present)
         run: |
           set -euo pipefail

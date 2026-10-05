@@ -381,34 +381,43 @@ if ( ! function_exists( function: 'jpkcom_gutenberg_img_alt_would_inject' ) ) {
 	 * Would this plugin's filter inject an alt attribute for this stored value?
 	 *
 	 * THE load-bearing function of this file, and deliberately not a paraphrase
-	 * of the rule. The filter gates on `! empty( $alt )` and the replacer then
-	 * returns the block unchanged when `'' === trim( $alt )`. Two consequences
-	 * follow that a reasonable-looking check would get wrong:
+	 * of the rule. The filter gates on `is_string( $alt ) && ! empty( $alt )`
+	 * and the replacer then returns the block unchanged when
+	 * `'' === trim( $alt )`. Three consequences follow that a reasonable-looking
+	 * check would get wrong:
 	 *
 	 * - An alt of the single character "0" is EMPTY to PHP, so nothing is
 	 *   injected. A check for `$alt !== ''` would call that image supplied.
 	 * - An alt of only spaces passes `! empty()` but is stopped by the trim in
 	 *   the replacer. A check that mirrored only the first gate would call that
 	 *   image supplied too.
+	 * - A value written programmatically as an array or object is stored
+	 *   serialised and comes back from get_post_meta() as that array or object,
+	 *   which is not text. Its raw meta_value is a non-empty string, so a check
+	 *   on the raw row would call that image supplied as well. The predicate
+	 *   therefore unserialises first, as get_post_meta() does.
 	 *
 	 * Reporting an image as fine when the mechanism has nothing to inject for it
 	 * is the one answer this ability must never give, because it is the answer
 	 * that stops someone looking.
 	 *
 	 * @since 1.1.0
+	 * @since 1.2.0 Unserialises like get_post_meta(); non-text values never inject.
 	 *
 	 * @param mixed $stored Raw stored alt value.
 	 * @return bool True when the filter would inject.
 	 */
 	function jpkcom_gutenberg_img_alt_would_inject( mixed $stored ): bool {
 
-		if ( empty( $stored ) ) {
+		$value = maybe_unserialize( $stored );
+
+		if ( ! is_string( value: $value ) || empty( $value ) ) {
 
 			return false;
 
 		}
 
-		return trim( string: (string) $stored ) !== '';
+		return trim( string: $value ) !== '';
 
 	}
 
@@ -421,10 +430,11 @@ if ( ! function_exists( function: 'jpkcom_gutenberg_img_alt_ability_reason' ) ) 
 	 * Name why the filter would inject nothing, so a fixer knows what is there.
 	 *
 	 * @since 1.1.0
+	 * @since 1.2.0 Added not_text.
 	 *
 	 * @param mixed $stored    Raw stored value.
 	 * @param bool  $row_found Whether a meta row exists at all.
-	 * @return string One of no_row, empty, zero, whitespace_only.
+	 * @return string One of no_row, empty, zero, whitespace_only, not_text.
 	 */
 	function jpkcom_gutenberg_img_alt_ability_reason( mixed $stored, bool $row_found ): string {
 
@@ -434,7 +444,13 @@ if ( ! function_exists( function: 'jpkcom_gutenberg_img_alt_ability_reason' ) ) 
 
 		}
 
-		$value = (string) $stored;
+		$value = maybe_unserialize( $stored );
+
+		if ( ! is_string( value: $value ) ) {
+
+			return 'not_text';
+
+		}
 
 		if ( $value === '' ) {
 
@@ -539,11 +555,29 @@ if ( ! function_exists( function: 'jpkcom_gutenberg_img_alt_ability_list_inner' 
 		//
 		// The WHERE clause is the same predicate as jpkcom_gutenberg_img_alt_would_inject(),
 		// expressed in SQL: no row, or a value that TRIMs to nothing, or the
-		// single character '0' which PHP treats as empty.
+		// single character '0' which PHP treats as empty, or a serialised value
+		// that get_post_meta() turns into something other than a string.
+		//
+		// The last group mirrors is_serialized() in strict mode for every type
+		// except 's' (a serialised string unserialises to text): 'N;', a/O/E with
+		// a length prefix and a closing ';' or '}', and b/i/d scalars. Text an
+		// editor saves that merely looks serialised is serialised once more by
+		// maybe_serialize() and stored as 's:', so it does not match here.
+		//
+		// The type token is compared with ASCII(), not inside the REGEXP: meta_value
+		// carries a case-insensitive collation, so '^[bid]' would also take 'I:42;',
+		// which is text to is_serialized(). REGEXP BINARY would fix that on MariaDB
+		// but is an error on MySQL 8. Codes: a=97 O=79 E=69, b=98 i=105 d=100.
 		$where = "p.post_type = 'attachment'
 			AND p.post_mime_type LIKE 'image/%%'
 			AND p.post_status IN ( 'inherit', 'publish' )
-			AND ( m.meta_id IS NULL OR TRIM( m.meta_value ) = '' OR m.meta_value = '0' )";
+			AND ( m.meta_id IS NULL OR TRIM( m.meta_value ) = '' OR m.meta_value = '0'
+				OR TRIM( m.meta_value ) = 'N;'
+				OR ( ASCII( TRIM( m.meta_value ) ) IN ( 97, 79, 69 )
+					AND TRIM( m.meta_value ) REGEXP '^.:[0-9]+:'
+					AND RIGHT( TRIM( m.meta_value ), 1 ) IN ( ';', '}' ) )
+				OR ( ASCII( TRIM( m.meta_value ) ) IN ( 98, 105, 100 )
+					AND TRIM( m.meta_value ) REGEXP '^.:[0-9.E+-]+;$' ) )";
 
 		$join = "LEFT JOIN {$wpdb->postmeta} m
 			ON m.post_id = p.ID AND m.meta_key = '_wp_attachment_image_alt'";
@@ -703,8 +737,8 @@ if ( ! function_exists( function: 'jpkcom_gutenberg_img_alt_get_ability_definiti
 									'stored_alt' => [ 'type' => 'string', 'description' => __( 'What is stored today, verbatim. Empty for most, but not all: see "reason".', 'jpkcom-gutenberg-img-alt' ) ],
 									'reason'     => [
 										'type'        => 'string',
-										'description' => __( 'Why nothing would be injected. "no_row" when no alt text was ever saved; "empty" when an empty value is stored; "whitespace_only" when the stored text is only spaces; "zero" when the stored text is the single character 0, which PHP treats as empty and this plugin therefore skips.', 'jpkcom-gutenberg-img-alt' ),
-										'enum'        => [ 'no_row', 'empty', 'whitespace_only', 'zero' ],
+										'description' => __( 'Why nothing would be injected. "no_row" when no alt text was ever saved; "empty" when an empty value is stored; "whitespace_only" when the stored text is only spaces; "zero" when the stored text is the single character 0, which PHP treats as empty and this plugin therefore skips; "not_text" when a serialised array, object or other non-text value is stored, which was written by code rather than in the media library.', 'jpkcom-gutenberg-img-alt' ),
+										'enum'        => [ 'no_row', 'empty', 'whitespace_only', 'zero', 'not_text' ],
 									],
 								],
 							],

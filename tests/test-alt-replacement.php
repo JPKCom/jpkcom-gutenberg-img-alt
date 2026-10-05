@@ -27,11 +27,8 @@ if ( ! function_exists( function: 'plugin_dir_path' ) ) {
     }
 }
 
-if ( ! function_exists( function: 'esc_attr' ) ) {
-    function esc_attr( string $text ): string {
-        return htmlspecialchars( string: $text, flags: ENT_QUOTES | ENT_SUBSTITUTE, encoding: 'UTF-8' );
-    }
-}
+// The replacer runs on WP_HTML_Tag_Processor - load the real one.
+require_once __DIR__ . '/bootstrap-html-api.php';
 
 require_once dirname( path: __DIR__ ) . '/jpkcom-gutenberg-img-alt.php';
 
@@ -45,6 +42,13 @@ $cases = [
         'html'     => '<img src="image.jpg" alt="old">',
         'alt'      => 'A "quoted" image & more',
         'expected' => '<img src="image.jpg" alt="A &quot;quoted&quot; image &amp; more">',
+    ],
+    // esc_attr() skipped ampersands that already looked like an entity, so an
+    // alt text that literally reads "&amp;" was shown to visitors as "&".
+    'escapes text that looks like an entity' => [
+        'html'     => '<img src="image.jpg" alt="old">',
+        'alt'      => 'Tom &amp; Jerry <3',
+        'expected' => '<img src="image.jpg" alt="Tom &amp;amp; Jerry &lt;3">',
     ],
     'leaves empty alt unchanged' => [
         'html'     => '<img src="image.jpg" alt="old">',
@@ -63,20 +67,67 @@ $cases = [
         'alt'      => 'Version \1 of the logo',
         'expected' => '<img src="image.jpg" alt="Version \1 of the logo">',
     ],
-    // Documented behaviour, not an oversight: the plugin rewrites an existing
-    // alt attribute, it never adds a missing one.
-    'leaves an img without an alt attribute alone' => [
+    // Changed in 1.2.0: the regular expression could only rewrite an existing
+    // alt attribute. An image without one now gets it.
+    'adds alt to an img without an alt attribute' => [
         'html'     => '<img src="image.jpg" class="wp-image-9">',
         'alt'      => 'Beach photo',
-        'expected' => '<img src="image.jpg" class="wp-image-9">',
+        'expected' => '<img alt="Beach photo" src="image.jpg" class="wp-image-9">',
     ],
-    'rewrites every img in the block' => [
+    'replaces a bare alt attribute' => [
+        'html'     => '<img src="image.jpg" alt class="wp-image-9">',
+        'alt'      => 'Beach photo',
+        'expected' => '<img src="image.jpg" alt="Beach photo" class="wp-image-9">',
+    ],
+    // Changed in 1.2.0: a core/image block renders exactly one image.
+    'changes only the first img' => [
         'html'     => '<img src="a.jpg" alt="A"><img src="b.jpg" alt="B">',
         'alt'      => 'Beach photo',
-        'expected' => '<img src="a.jpg" alt="Beach photo"><img src="b.jpg" alt="Beach photo">',
+        'expected' => '<img src="a.jpg" alt="Beach photo"><img src="b.jpg" alt="B">',
+    ],
+    // The regular expression's greedy [^>]+ ran on to the LAST 'alt="' in the
+    // tag and overwrote data-alt, leaving the real alt untouched.
+    'sets alt, not an attribute ending in alt' => [
+        'html'     => '<img src="image.jpg" alt="old" data-alt="keep">',
+        'alt'      => 'Beach photo',
+        'expected' => '<img src="image.jpg" alt="Beach photo" data-alt="keep">',
+    ],
+    // [^>]+ stopped at the > inside the title, so the regex never matched.
+    'copes with > inside another attribute' => [
+        'html'     => '<img src="image.jpg" title="a > b" alt="old">',
+        'alt'      => 'Beach photo',
+        'expected' => '<img src="image.jpg" title="a > b" alt="Beach photo">',
+    ],
+    'replaces a single-quoted alt' => [
+        'html'     => "<img src='image.jpg' alt='old'>",
+        'alt'      => 'Beach photo',
+        'expected' => "<img src='image.jpg' alt=\"Beach photo\">",
+    ],
+    'matches an upper-case attribute name' => [
+        'html'     => '<IMG SRC="image.jpg" ALT="old">',
+        'alt'      => 'Beach photo',
+        'expected' => '<IMG SRC="image.jpg" alt="Beach photo">',
+    ],
+    'skips an img inside a comment' => [
+        'html'     => '<!-- <img alt="old"> --><img src="image.jpg" alt="real">',
+        'alt'      => 'Beach photo',
+        'expected' => '<!-- <img alt="old"> --><img src="image.jpg" alt="Beach photo">',
+    ],
+    'skips an img inside an attribute value' => [
+        'html'     => '<figure data-note=\'<img alt="x">\'><img src="image.jpg" alt="real"></figure>',
+        'alt'      => 'Beach photo',
+        'expected' => '<figure data-note=\'<img alt="x">\'><img src="image.jpg" alt="Beach photo"></figure>',
+    ],
+    'leaves markup without an img unchanged' => [
+        'html'     => '<figure><figcaption>No image</figcaption></figure>',
+        'alt'      => 'Beach photo',
+        'expected' => '<figure><figcaption>No image</figcaption></figure>',
     ],
 ];
 
+$failed = 0;
+
+// Every case runs, so a regression shows all it breaks rather than the first.
 foreach ( $cases as $name => $case ) {
     $actual = jpkcom_gutenberg_img_alt_replace_alt_attribute(
         block_content: $case['html'],
@@ -84,14 +135,19 @@ foreach ( $cases as $name => $case ) {
     );
 
     if ( $actual !== $case['expected'] ) {
+        $failed++;
         fwrite( stream: STDERR, data: sprintf(
             "Failed: %s\nExpected: %s\nActual:   %s\n",
             $name,
             $case['expected'],
             $actual
         ) );
-        exit( 1 );
     }
 }
 
-echo "OK - alt replacement regression tests passed.\n";
+if ( $failed > 0 ) {
+    fwrite( stream: STDERR, data: sprintf( "%d of %d cases failed.\n", $failed, count( $cases ) ) );
+    exit( 1 );
+}
+
+printf( "OK - %d alt replacement regression tests passed.\n", count( $cases ) );

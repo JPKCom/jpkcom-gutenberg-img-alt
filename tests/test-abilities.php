@@ -31,12 +31,53 @@ function add_filter( string $hook, mixed $callback, int $priority = 10, int $acc
 	return true;
 }
 
-function esc_attr( string $text ): string {
-	return htmlspecialchars( $text, ENT_QUOTES, 'UTF-8' );
-}
-
 function plugin_dir_path( string $file ): string {
 	return dirname( $file ) . '/';
+}
+
+// A port of core's is_serialized() (strict) and maybe_unserialize(). The
+// predicate and the reason both go through it, and the injection's input is
+// what get_post_meta() returns - so the comparison below needs the real rule,
+// not a looser stand-in that would agree with anything.
+function is_serialized( mixed $data, bool $strict = true ): bool {
+	if ( ! is_string( $data ) ) {
+		return false;
+	}
+	$data = trim( $data );
+	if ( 'N;' === $data ) {
+		return true;
+	}
+	if ( strlen( $data ) < 4 || ':' !== $data[1] ) {
+		return false;
+	}
+	$last = substr( $data, -1 );
+	if ( $strict && ';' !== $last && '}' !== $last ) {
+		return false;
+	}
+	$token = $data[0];
+	switch ( $token ) {
+		case 's':
+			if ( $strict && '"' !== substr( $data, -2, 1 ) ) {
+				return false;
+			}
+			// No break.
+		case 'a':
+		case 'O':
+		case 'E':
+			return (bool) preg_match( "/^{$token}:[0-9]+:/s", $data );
+		case 'b':
+		case 'i':
+		case 'd':
+			return (bool) preg_match( "/^{$token}:[0-9.E+-]+;\$/", $data );
+	}
+	return false;
+}
+
+function maybe_unserialize( mixed $data ): mixed {
+	if ( is_serialized( $data ) ) {
+		return @unserialize( trim( $data ) );
+	}
+	return $data;
 }
 
 define( 'WPINC', 'wp-includes' );
@@ -44,6 +85,10 @@ define( 'WPINC', 'wp-includes' );
 $root = dirname( __DIR__ );
 
 require_once $root . '/includes/abilities.php';
+
+// The replacer runs on WP_HTML_Tag_Processor; the comparison below executes it,
+// so the real class has to be there.
+require_once __DIR__ . '/bootstrap-html-api.php';
 
 // The main file is what defines the replacer whose behaviour the predicate has
 // to agree with. Requiring it also proves the two are loadable together.
@@ -219,6 +264,16 @@ $cases = [
 	'text starting in 0' => '0 Grad',
 	'the string false'   => 'false',
 	'a numeric string'   => '42',
+	// Raw meta_value rows as the database holds them. get_post_meta() hands the
+	// filter the unserialised value, so these are where a raw-row check and the
+	// injection part ways.
+	'a serialised array'  => serialize( [ 'Ein Hund' ] ),
+	'a serialised object' => serialize( (object) [ 'alt' => 'Ein Hund' ] ),
+	'a serialised int'    => 'i:42;',
+	'a serialised false'  => 'b:0;',
+	'a serialised null'   => 'N;',
+	'a serialised string' => serialize( 'Ein Hund im Schnee' ),
+	'text that only looks serialised' => 'a:1: Hund',
 ];
 
 $html = '<figure><img src="x.png" alt="PLACEHOLDER"/></figure>';
@@ -226,11 +281,14 @@ $disagreements = 0;
 
 foreach ( $cases as $label => $value ) {
 
-	// What the plugin actually does: the filter gates on ! empty(), and the
-	// replacer then returns the content unchanged when the value trims to
-	// nothing. Both steps together are the rule.
-	$actually_injects = ! empty( $value )
-		&& jpkcom_gutenberg_img_alt_replace_alt_attribute( $html, (string) $value ) !== $html;
+	// What the plugin actually does: get_post_meta() unserialises the row, the
+	// filter gates on is_string() and ! empty(), and the replacer then returns
+	// the content unchanged when the value trims to nothing. All of it together
+	// is the rule.
+	$meta = maybe_unserialize( $value );
+
+	$actually_injects = is_string( $meta ) && ! empty( $meta )
+		&& jpkcom_gutenberg_img_alt_replace_alt_attribute( $html, $meta ) !== $html;
 
 	$predicate = jpkcom_gutenberg_img_alt_would_inject( $value );
 
@@ -252,7 +310,8 @@ chk(
 	jpkcom_gutenberg_img_alt_ability_reason( '0', true ) === 'zero'
 		&& jpkcom_gutenberg_img_alt_ability_reason( '   ', true ) === 'whitespace_only'
 		&& jpkcom_gutenberg_img_alt_ability_reason( '', true ) === 'empty'
-		&& jpkcom_gutenberg_img_alt_ability_reason( null, false ) === 'no_row',
+		&& jpkcom_gutenberg_img_alt_ability_reason( null, false ) === 'no_row'
+		&& jpkcom_gutenberg_img_alt_ability_reason( serialize( [ 'x' ] ), true ) === 'not_text',
 	'A fixer needs to know what is there. "0" and "   " look set in the admin and are not, and saying only "missing" sends someone looking at a field that is visibly filled.'
 );
 
