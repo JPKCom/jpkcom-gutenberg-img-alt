@@ -3,7 +3,7 @@
 **Plugin Name:** JPKCom Gutenberg Image Block Alt-Attribute  
 **Plugin URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt  
 **Description:** SEO-friendly, dynamic updates for image block alt-attribute texts.  
-**Version:** 1.2.0  
+**Version:** 1.2.1  
 **Author:** Jean Pierre Kolb <jpk@jpkc.com>  
 **Author URI:** https://www.jpkc.com  
 **Contributors:** JPKCom  
@@ -11,9 +11,10 @@
 **Requires at least:** 7.0  
 **Tested up to:** 7.1  
 **Requires PHP:** 8.3  
-**Stable tag:** 1.2.0  
+**Stable tag:** 1.2.1  
 **License:** GPL-2.0-or-later  
-**License URI:** https://www.gnu.org/licenses/gpl-2.0.html
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
+**Update URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt
 
 SEO-friendly, dynamic updates for image block alt-attribute texts.
 
@@ -37,6 +38,12 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 
 
 ## Changelog
+
+### 1.2.1
+* Security: the plugin header now carries `Update URI: https://github.com/JPKCom/jpkcom-gutenberg-img-alt`. Without it, WordPress also asks wordpress.org for updates under this plugin's slug, so a same-named plugin published there with a higher version would be offered as an update of this one. With the header, wordpress.org answers nothing for this plugin and updates come only from this repository
+* Changed: the updater keeps its manifest cache, its failure marker and its fetch lock in site transients. On multisite the network now fetches the manifest once instead of once per site; on a single site nothing changes. The old per-site entries expire on their own within a day
+* Changed: the release workflow downloads phpDocumentor from a fixed GitHub release and verifies its SHA-256 before running it, instead of executing whatever phpdoc.org serves that day. No effect on the shipped plugin
+* CI: `shivammathur/setup-php` pinned to 2.40.0
 
 ### 1.2.0
 * Changed: the alt text is now set with WordPress' HTML Tag Processor (`WP_HTML_Tag_Processor`) instead of a regular expression. The expression only handled the exact markup core produces and failed silently on anything else: it could overwrite a `data-alt` attribute instead of `alt`, found nothing when another attribute contained a `>` or when `alt` was single-quoted, bare or upper-case, and could pick up an `<img` inside a comment or an attribute value. The Tag Processor parses the block like a browser does and avoids all of these
