@@ -3,7 +3,7 @@
 **Plugin Name:** JPKCom Gutenberg Image Block Alt-Attribute  
 **Plugin URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt  
 **Description:** SEO-friendly, dynamic updates for image block alt-attribute texts.  
-**Version:** 1.2.1  
+**Version:** 1.2.2  
 **Author:** Jean Pierre Kolb <jpk@jpkc.com>  
 **Author URI:** https://www.jpkc.com  
 **Contributors:** JPKCom  
@@ -11,7 +11,7 @@
 **Requires at least:** 7.0  
 **Tested up to:** 7.1  
 **Requires PHP:** 8.3  
-**Stable tag:** 1.2.1  
+**Stable tag:** 1.2.2  
 **License:** GPL-2.0-or-later  
 **License URI:** https://www.gnu.org/licenses/gpl-2.0.html  
 **Update URI:** https://github.com/JPKCom/jpkcom-gutenberg-img-alt
@@ -38,6 +38,9 @@ SEO-friendly, dynamic updates for image block alt-attribute texts.
 
 
 ## Changelog
+
+### 1.2.2
+* Added: a plugin icon. The update manifest now points WordPress to the JPKCom logo, so the Updates screen (Dashboard → Updates) shows it next to this plugin instead of the generic pattern wordpress.org generates from the slug
 
 ### 1.2.1
 * Security: the plugin header now carries `Update URI: https://github.com/JPKCom/jpkcom-gutenberg-img-alt`. Without it, WordPress also asks wordpress.org for updates under this plugin's slug, so a same-named plugin published there with a higher version would be offered as an update of this one. With the header, wordpress.org answers nothing for this plugin and updates come only from this repository
